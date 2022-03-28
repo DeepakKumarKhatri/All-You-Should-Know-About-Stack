@@ -4,8 +4,7 @@
 using namespace std;
 
 int main(){
-
-    //Creating stack in STL
+    //Creating Stack in STL
     stack<int> s;
     //Push Method (Insert In Stack From The Top Only)
     s.push(1);
