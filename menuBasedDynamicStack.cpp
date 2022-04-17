@@ -79,7 +79,6 @@ void push(int element){
         newNode->next = top;
         top = newNode;
     }
-    mainMenu();
 }
 int pop(){
     int x = -1;
@@ -107,7 +106,6 @@ int peek(int position){
             return -1;
         }
     }
-    mainMenu();
 }
 bool isEmpty(){
     if(top==NULL){
