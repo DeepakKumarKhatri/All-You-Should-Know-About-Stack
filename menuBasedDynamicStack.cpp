@@ -1,16 +1,16 @@
 #include<iostream>
 using namespace std;
 
-struct DStack{
+struct Stack{
     int data;
-    DStack* next = NULL;
+    struct Stack* next;
 };
-DStack* top = NULL;
+Stack* top = NULL;
 
-void push();
+void push(int element);
 int pop();
 void mainMenu();
-int peek();
+int peek(int position);
 bool isEmpty();
 bool isFull();
 int stackTop();
@@ -36,70 +36,68 @@ void mainMenu(){
         case 0:
             break;
         case 1:
-            push();
+            cout<<"Enter A Element to Push: ";
+            int element;
+            cin>>element;
+            push(element);
             break;
         case 2:
             cout<<"The Element Poped Is: "<<pop();
             mainMenu();
             break;
         case 3:
-            cout<<"The Element Is: "<<peek();
+            cout<<"Enter Position to View At: ";
+            int position;
+            cin>>position;
+            cout<<"The Element Is: "<<peek(position);
             mainMenu();
             break;
         case 4:
             cout<<"Stack Top: "<<stackTop();
-			mainMenu();
+            mainMenu();
             break;
         case 5:
             cout<<"Stack Is Empty: : "<<isEmpty();
             mainMenu();
-			break;
+            break;
         case 6:
             cout<<"Stack Is Full: "<<isFull();
             mainMenu();
-			break;
+            break;
         default:
             cout<<"*** Invalid Option ***\n";
             cout<<"*** Enter Again ***\n";
             mainMenu();
     }
 }
-void push(){
-    DStack *newNode = new DStack;
-    cout<<"Enter A Element to Push: ";
-    int element;
-    cin>>newNode->data;
+void push(int element){
+    Stack *newNode = new Stack;
     if(newNode==NULL){
         cout<<"Stack Is Full (STACK-OVER-FLOW)";
-    }
-    if(top==NULL){
-        top = newNode;
-    }else{
+    }else {
+        newNode->data = element;
         newNode->next = top;
         top = newNode;
-    } mainMenu();
+    }
+    mainMenu();
 }
 int pop(){
     int x = -1;
-    DStack *p = top;
+    Stack *p = top;
     if(top==NULL){
         cout<<"Stack Is Empty (STACK-UNDER-FLOW)";
     }else{
-        x = top->data;
         top = top->next;
+        x = p->data;
         delete p;
     }
     return x;
-    mainMenu();
 }
-int peek(){
+int peek(int position){
     if(top==NULL){
         cout<<"Stack Is Empty (STACK-UNDER-FLOW)";
     }else{
-        DStack *p = top;
-        cout<<"Enter Position to View At: ";
-        int position;
-        cin>>position;
+        Stack *p = top;
         for(int i=0;p!=NULL && i<position-1;i++){
             p = p->next;
         }
@@ -117,16 +115,15 @@ bool isEmpty(){
     }else{
         return false;
     }
-	mainMenu();
 }
 bool isFull(){
-    DStack *p = top;
+    //when p is not created then stack is full
+    Stack *p = new Stack;
     if(p==NULL){
         return true;
     }else{
         return false;
     }
-	mainMenu();
 }
 int stackTop(){
     if(top==NULL){
@@ -134,5 +131,4 @@ int stackTop(){
     }else{
         return top->data;
     }
-	mainMenu();
 }
