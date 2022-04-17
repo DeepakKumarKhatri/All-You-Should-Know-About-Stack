@@ -7,7 +7,7 @@ struct Stack{
     //Top most pointer which will initially be -1
     int top = -1;
     //An array which will have same size as stack
-    int *s;
+    int *stackArray;
 };
 void push(Stack *st,int x);
 int pop(Stack *st);
@@ -37,30 +37,28 @@ void mainMenu(){
         case 0:
             break;
         case 1:
-            cout<<"Enter Stack Size: ";
-            cin>>st.size;
-            //st.top = -1;
-            st.s = new int[st.size];
-            for(int i=0;i<st.size;i++) {
-                cout << "Enter Element to Pass: ";
-                int x;
-                cin >> x;
-                push(&st, x);
-            }
+            st.stackArray = new int[st.size];
+            cout << "Enter Element to Pass: ";
+            int x;
+            cin >> x;
+            push(&st, x);
             mainMenu();
             break;
         case 2:
             cout<<"The Element Deleted Is: "<<pop(&st);
             mainMenu();
+            break;
         case 3:
             cout<<"Enter Position to View At: ";
             int position;
             cin>>position;
             cout<<"The Element at "<<position<<" Is: "<<peek(st,position);
             mainMenu();
+            break;
         case 4:
             cout<<"The Element at Stack Top: "<<stackTop(st);
             mainMenu();
+            break;
         case 5:
             if(isEmpty(st)) {
                 cout << "Stack Is Empty?: " << "true";
@@ -68,6 +66,7 @@ void mainMenu(){
                 cout << "Stack Is Empty?: " << "false";
             }
             mainMenu();
+            break;
         case 6:
             if(isFull(st)) {
                 cout << "Stack Is Full?: " << "true";
@@ -75,12 +74,14 @@ void mainMenu(){
                 cout << "Stack Is Full?: " << "false";
             }
             mainMenu();
+            break;
         case 7:
             if(Palindrome(st)){
                 cout << "Stack Is Palindrome: " << "true";
             } else{
                 cout << "Stack Is Palindrome: " << "false";}
             mainMenu();
+            break;
         default:
             cout<<"*** Invalid Option ***\n";
             cout<<"*** Enter Again ***\n";
@@ -88,17 +89,18 @@ void mainMenu(){
     }
 }
 int main(){
+    cout<<"Enter Stack Size: ";
+    cin>>st.size;
     mainMenu();
 }
 
 void push(Stack *st,int x){
-    //cout<<"I am Stack Yayy";
     if(st->top==st->size-1){
         cout<<"Stack Is Full (STACK-OVER-FLOW)";
     }
     else{
-            st->top++;
-            st->s[st->top] = x;
+        st->top++;
+        st->stackArray[st->top] = x;
     }
 }
 int pop(Stack *st){
@@ -107,7 +109,7 @@ int pop(Stack *st){
         cout<<"Stack Is Empty (STACK-UNDER-FLOW)";
     }
     else{
-        x = st->s[st->top];
+        x = st->stackArray[st->top];
         st->top--;
     }
     return x;
@@ -118,7 +120,7 @@ int peek(Stack st,int position){
     if(st.top-position+1<0){
         cout<<"\n\n<<<<<<<<<<<<<< INVALID POSITION >>>>>>>>>>>>>>>\n\n";
     }else{
-        x = st.s[(st.top-position)+1];
+        x = st.stackArray[(st.top - position) + 1];
         return x;
     }
 }
@@ -126,7 +128,7 @@ int stackTop(Stack st){
     if(st.top==-1){
         cout<<"Stack Is Empty (STACK-UNDER-FLOW)";
     } else{
-        return st.s[st.top];
+        return st.stackArray[st.top];
     }
 }
 bool isEmpty(Stack st){
@@ -148,19 +150,12 @@ bool Palindrome(Stack st){
         cout<<"Stack Is Empty (STACK-UNDER-FLOW)";
     }
     else {
-        int arrToStore[st.size];
-        int arrToStoreReverse[st.size];
+        int j = st.size-1;
         for (int i = 0; i < st.size; i++) {
-            arrToStore[i] = st.s[st.top];
-            st.top--;
-        }
-        for (int i = 0; i < st.size; i++) {
-            arrToStoreReverse[i] = arrToStore[st.size-1];
-            st.size--;
-        }
-        for (int i = 0; i < st.size; i++) {
-            if(arrToStoreReverse[i]!=arrToStore[i]){
+            if(st.stackArray[i] != st.stackArray[j]){
                 return false;
+            } else{
+                j--;
             }
         }
     }
