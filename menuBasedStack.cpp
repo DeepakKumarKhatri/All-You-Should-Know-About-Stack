@@ -9,7 +9,7 @@ struct Stack{
     //An array which will have same size as stack
     int *stackArray;
 };
-void push(Stack *st,int x);
+void push(Stack *st,int element);
 int pop(Stack *st);
 int peek(Stack st,int position);
 int stackTop(Stack st);
@@ -94,13 +94,13 @@ int main(){
     mainMenu();
 }
 
-void push(Stack *st,int x){
+void push(Stack *st,int element){
     if(st->top==st->size-1){
         cout<<"Stack Is Full (STACK-OVER-FLOW)";
     }
     else{
         st->top++;
-        st->stackArray[st->top] = x;
+        st->stackArray[st->top] = element;
     }
 }
 int pop(Stack *st){
